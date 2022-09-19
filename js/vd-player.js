@@ -35,9 +35,9 @@
 
         pause(video, icon)
 
-        video.removeEventListener('click', () => {
-            handleVideoPlay(video, icon)
-        })
+        let elemClone = src.cloneNode(true)
+        console.log('cloned', elemClone)
+        src.parentNode.replaceChild(elemClone, src)
     }
 
     const toggleMute = (video, button) => {
@@ -155,9 +155,10 @@
 
     // Slider events
     swiper.on('slideChangeTransitionStart', () => {
-        const srcs = document.querySelectorAll('.vd-player')
-
-        srcs.forEach((src) => {
+        const slides = [...document.querySelectorAll('.swiper-slide')]
+        const filteredSlides = slides.filter((slide) => !slide.classList.contains('swiper-slide-active'))
+        filteredSlides.forEach((filteredSlide) => {
+            const src = filteredSlide.querySelector('.vd-player')
             videoStop(src)
         })
     })
