@@ -1,0 +1,154 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.vd-player {
+  --ui-color: #fff;
+  --progress-bar-color: #d02f28;
+
+  width: 100%;
+  height: var(--height, 100vh);
+  position: relative;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+
+  &__container {
+    width: calc(100% - 2rem);
+    margin-inline: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+}
+
+/* Play/Pause Button */
+.vd-player__play-pause {
+  background-color: transparent;
+  border: none;
+}
+
+.PlayPause {
+  font-size: 1rem;
+  position: relative;
+  width: 0.75em;
+  height: 1em;
+  transition: clip-path 300ms ease-in-out;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.PlayPause::before,
+.PlayPause::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 50%;
+  transform: scaleX(0.75);
+  transform-origin: left;
+  background-color: var(--ui-color);
+  transition: transform 300ms ease-in-out;
+}
+
+.PlayPause::after {
+  left: auto;
+  right: 0;
+  transform-origin: right;
+}
+
+.PlayPause.is-paused {
+  clip-path: polygon(0 0, 100% 50%, 100% 50%, 0% 100%);
+}
+
+.PlayPause.is-paused::before,
+.PlayPause.is-paused::after {
+  transform: scaleX(1);
+}
+
+/* Progress/Rewind */
+.progress {
+  flex: 10;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-basis: 100%;
+  height: 6px;
+  transition: height 0.3s;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: ew-resize;
+}
+
+.progress__filled {
+  width: 50%;
+  background: var(--progress-bar-color);
+  flex: 0;
+  flex-basis: 0%;
+}
+
+/* Mute/Unmute */
+.toggle-mute {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: transparent;
+  border: none;
+
+  &.muted {
+    .sound-on {
+      display: none;
+    }
+
+    .sound-off {
+      display: block;
+    }
+  }
+
+  .sound-on {
+    display: block;
+  }
+
+  .sound-off {
+    display: none;
+  }
+
+  svg {
+    stroke: var(--ui-color);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+/* Timestamp */
+.timestamp {
+  span {
+    font-family: 'Noto Sans Georgian AG', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ui-color);
+  }
+}
