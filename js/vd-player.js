@@ -36,7 +36,6 @@
         pause(video, icon)
 
         let elemClone = src.cloneNode(true)
-        console.log('cloned', elemClone)
         src.parentNode.replaceChild(elemClone, src)
     }
 
